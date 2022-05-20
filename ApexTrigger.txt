@@ -1,0 +1,8 @@
+trigger AccountDuplication on Account (before insert) {
+    for(Account acc:Trigger.new){
+        List<Account> mynew=[select ID,Name from Account where name= :acc.name];
+        if(mynew.size()>0)
+        {
+            acc.Name.addError('Account with same name already existing');
+        }
+    }
